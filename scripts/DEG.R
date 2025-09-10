@@ -1,3 +1,6 @@
+# Code for Bulk Transcriptomics Analysis
+# This set of code was used to analyse all the bulk transcriptomics data in this manuscript. 
+
 setwd("~/DEG")
 
 # Data cleanup
