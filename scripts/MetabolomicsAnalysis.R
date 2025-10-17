@@ -681,7 +681,7 @@ pheatmap(
 dev.off()
 
 
-#### Box Plots ####
+#### Box and Scatter Plots ####
 ClinicalMeta$age = ifelse(ClinicalMeta$age_at_visit_max=="90+", 90, ClinicalMeta$age_at_visit_max)
 ClinicalMeta$Sex = ifelse(ClinicalMeta$msex==0, "Female","Male")
 all(rownames(ClinicalMeta)==colnames(Metab_Raw))
@@ -700,8 +700,76 @@ NAAG=ggplot(Clinical_Metab_cogdx, aes(x=as.character(cogdx), y=`N.acetyl.asparty
   theme(axis.title.y = element_text(size=rel(1.0)),axis.text.x = element_text(size=rel(1.0),color="black"),axis.text.y = element_text(size=rel(1.0)))+
   facet_grid(~Sex)
 
+NAAG2=ggplot(Clinical_Metab_cogdx, aes(x=as.character(cogdx), y=`N.acetyl.aspartyl.glutamate..NAAG.`,color=as.character(cogdx)))+
+  geom_jitter(position = position_jitter(0.2), size=1, alpha = 0.5)+labs(title="",x="Cogdx score",y="Expression")+ #ylim(c(7,9))+
+  ggpubr::stat_compare_means()+
+  stat_summary(fun = mean, geom = "point", size = 3) +  # Mean points next
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, color = "black") +  # Error bars last (on top of everything)
+  theme_bw()+
+  scale_color_brewer(palette="Dark2")+
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))+
+  theme(legend.position="none")+ geom_jitter(shape=1, position=position_jitter(0.2))+
+  labs(title="NAAG")+
+  theme(axis.title.y = element_text(size=rel(1.0)),axis.text.x = element_text(size=rel(1.0),color="black"),axis.text.y = element_text(size=rel(1.0)))+
+  facet_grid(~Sex)
+
+NAAG3=ggplot(Clinical_Metab_cogdx, aes(x=as.character(cogdx), y=`N.acetyl.aspartyl.glutamate..NAAG.`,color=as.character(cogdx)))+
+  geom_jitter(position = position_jitter(0.2), size=1, alpha = 0.5)+labs(title="",x="Cogdx score",y="Expression")+ #ylim(c(7,9))+
+  #ggpubr::stat_compare_means()+
+  stat_summary(fun = mean, geom = "point", size = 3) +  # Mean points next
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, color = "black") +  # Error bars last (on top of everything)
+  theme_bw()+
+  scale_color_brewer(palette="Dark2")+
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))+
+  theme(legend.position="none")+ geom_jitter(shape=1, position=position_jitter(0.2))+
+  labs(title="NAAG")+
+  theme(axis.title.y = element_text(size=rel(1.0)),axis.text.x = element_text(size=rel(1.0),color="black"),axis.text.y = element_text(size=rel(1.0)))+
+  facet_grid(~Sex)
+
 pdf("12_NAAG.pdf",width=6,height=3)
 print(NAAG)
+dev.off()
+
+pdf("1b_NAAG.pdf",width=6,height=3)
+print(NAAG3)
+dev.off()
+
+pdf("1a_NAAG.pdf",width=6,height=3)
+print(NAAG2)
+dev.off()
+
+Aspartate2=ggplot(Clinical_Metab_cogdx, aes(x=as.character(cogdx), y=`aspartate`,color=as.character(cogdx)))+
+  geom_jitter(position = position_jitter(0.2), size=1, alpha = 0.5)+labs(title="",x="Cogdx score",y="Expression")+ #ylim(c(7,9))+
+  ggpubr::stat_compare_means()+
+  stat_summary(fun = mean, geom = "point", size = 3) +  # Mean points next
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, color = "black") +  # Error bars last (on top of everything)
+  theme_bw()+
+  scale_color_brewer(palette="Dark2")+
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))+
+  theme(legend.position="none")+ geom_jitter(shape=1, position=position_jitter(0.2))+
+  labs(title="Aspartate")+
+  theme(axis.title.y = element_text(size=rel(1.0)),axis.text.x = element_text(size=rel(1.0),color="black"),axis.text.y = element_text(size=rel(1.0)))+
+  facet_grid(~Sex)
+
+pdf("2a_Aspartate.pdf",width=6,height=3)
+print(Aspartate2)
+dev.off()
+
+Aspartate3=ggplot(Clinical_Metab_cogdx, aes(x=as.character(cogdx), y=`aspartate`,color=as.character(cogdx)))+
+  geom_jitter(position = position_jitter(0.2), size=1, alpha = 0.5)+labs(title="",x="Cogdx score",y="Expression")+ #ylim(c(7,9))+
+  #ggpubr::stat_compare_means()+
+  stat_summary(fun = mean, geom = "point", size = 3) +  # Mean points next
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, color = "black") +  # Error bars last (on top of everything)
+  theme_bw()+
+  scale_color_brewer(palette="Dark2")+
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))+
+  theme(legend.position="none")+ geom_jitter(shape=1, position=position_jitter(0.2))+
+  labs(title="Aspartate")+
+  theme(axis.title.y = element_text(size=rel(1.0)),axis.text.x = element_text(size=rel(1.0),color="black"),axis.text.y = element_text(size=rel(1.0)))+
+  facet_grid(~Sex)
+
+pdf("2b_Aspartate.pdf",width=6,height=3)
+print(Aspartate3)
 dev.off()
 
 Aspartate=ggplot(Clinical_Metab_cogdx, aes(x=as.character(cogdx), y=`aspartate`,color=as.character(cogdx)))+
@@ -732,6 +800,40 @@ Glutamate=ggplot(Clinical_Metab_cogdx, aes(x=as.character(cogdx), y=`glutamate`,
 
 pdf("14_Glutamate.pdf",width=6,height=3)
 print(Glutamate)
+dev.off()
+
+Glutamate2=ggplot(Clinical_Metab_cogdx, aes(x=as.character(cogdx), y=`glutamate`,color=as.character(cogdx)))+
+  geom_jitter(position = position_jitter(0.2), size=1, alpha = 0.5)+labs(title="",x="Cogdx score",y="Expression")+ #ylim(c(7,9))+
+  #ggpubr::stat_compare_means()+
+  stat_summary(fun = mean, geom = "point", size = 3) +  # Mean points next
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, color = "black") +  # Error bars last (on top of everything)
+  theme_bw()+
+  scale_color_brewer(palette="Dark2")+
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))+
+  theme(legend.position="none")+ geom_jitter(shape=1, position=position_jitter(0.2))+
+  labs(title="Aspartate")+
+  theme(axis.title.y = element_text(size=rel(1.0)),axis.text.x = element_text(size=rel(1.0),color="black"),axis.text.y = element_text(size=rel(1.0)))+
+  facet_grid(~Sex)
+
+pdf("3a_Glutamate.pdf",width=6,height=3)
+print(Glutamate2)
+dev.off()
+
+Glutamate3=ggplot(Clinical_Metab_cogdx, aes(x=as.character(cogdx), y=`glutamate`,color=as.character(cogdx)))+
+  geom_jitter(position = position_jitter(0.2), size=1, alpha = 0.5)+labs(title="",x="Cogdx score",y="Expression")+ #ylim(c(7,9))+
+  ggpubr::stat_compare_means()+
+  stat_summary(fun = mean, geom = "point", size = 3) +  # Mean points next
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, color = "black") +  # Error bars last (on top of everything)
+  theme_bw()+
+  scale_color_brewer(palette="Dark2")+
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))+
+  theme(legend.position="none")+ geom_jitter(shape=1, position=position_jitter(0.2))+
+  labs(title="Aspartate")+
+  theme(axis.title.y = element_text(size=rel(1.0)),axis.text.x = element_text(size=rel(1.0),color="black"),axis.text.y = element_text(size=rel(1.0)))+
+  facet_grid(~Sex)
+
+pdf("3b_Glutamate.pdf",width=6,height=3)
+print(Glutamate3)
 dev.off()
 
 
