@@ -312,6 +312,60 @@ pdf("Cogdx_PDHA1_Expr_pvalue.pdf",height=12,width=6)
 print(g)
 dev.off()
 
+# Scatter Plot
+g2 <- ggplot(tmp1, aes(x = as.character(cogdx), y = log2(Expression + 1), color = as.character(cogdx))) +  
+  geom_jitter(position = position_jitter(0.2), size = 1, alpha = 0.7) +  # Dots first, with transparency
+  stat_summary(fun = mean, geom = "point", size = 3) +  # Mean points next
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, color = "black") +  # Error bars last (on top of everything)
+  facet_grid(Gene ~ Gender, scales = "free_y") +  
+  theme_bw() +  
+  scale_color_brewer(palette = "Set2") +  
+  ggpubr::stat_compare_means() +  
+  theme(
+    strip.background = element_blank(), 
+    strip.text.x = element_text(size = rel(1.0)),
+    strip.text.y = element_text(size = rel(1.0), face = "italic")
+  ) + 
+  theme(
+    axis.text.x = element_text(size = rel(1.0)), 
+    axis.ticks = element_blank()
+  ) + 
+  guides(fill = FALSE) +  
+  scale_x_discrete(expand = c(0.2, 0)) +  
+  scale_y_continuous(expand = c(0.1, 0.5))
+
+# Save the plot as PDF
+pdf("Cogdx_PDHA1_Expr_Scatter.pdf", height = 12, width = 6)
+print(g2)
+dev.off()
+
+# Your modified ggplot code without statistical annotations
+g3 <- ggplot(tmp1, aes(x = as.character(cogdx), y = log2(Expression + 1), color = as.character(cogdx))) +  
+  geom_jitter(position = position_jitter(0.2), size = 1, alpha = 0.5) +  # Dots first, with transparency
+  stat_summary(fun = mean, geom = "point", size = 3) +  # Mean points next
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, color = "black") +  # Error bars last (on top of everything)
+  facet_grid(Gene ~ Gender, scales = "free_y") +  
+  theme_bw() +  
+  scale_color_brewer(palette = "Set2") +  
+  theme(
+    strip.background = element_blank(), 
+    strip.text.x = element_text(size = rel(1.0)),
+    strip.text.y = element_text(size = rel(1.0), face = "italic")
+  ) + 
+  theme(
+    axis.text.x = element_text(size = rel(1.0)), 
+    axis.ticks = element_blank()
+  ) + 
+  guides(fill = FALSE) +  
+  scale_x_discrete(expand = c(0.2, 0)) +  
+  scale_y_continuous(expand = c(0.1, 0.5))
+
+# Save the plot as PDF
+pdf("Cogdx_PDHA1_Expr_Scatter_noP.pdf", height = 12, width = 6)
+print(g3)
+dev.off()
+
+
 # PDHA1
 PDHA_1 = tmp %>% 
   filter(cogdx == 1) %>%
